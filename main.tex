@@ -31,9 +31,23 @@
 \usepackage{lastpage}		% Usado pela Ficha catalográfica
 \usepackage{indentfirst}	% Indenta o primeiro parágrafo de cada seção.
 \usepackage{nomencl} 		% Lista de simbolos
-\usepackage{graphicx}		% Inclusão de gráficos
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algorithmic}% Inclusão de gráficos
 \usepackage[brazil]{babel}  % Codificação e uso de caracteres especiais.
 \usepackage[utf8]{inputenc}
+
+\usepackage{listings}
+\lstset{
+    language=C++,           % Define a linguagem do código (neste caso, C++)
+    basicstyle=\ttfamily,   % Estilo básico da fonte
+    numbers=left,           % Coloca números de linha à esquerda
+    numberstyle=\tiny,      % Estilo dos números de linha
+    breaklines=true,        % Quebra de linha automática
+    frame=single,           % Moldura em torno do código
+    tabsize=4               % Tamanho da tabulação
+}
+
 %% ------------------------------------------------------------------------
 %% Pacotes adicionais, usados apenas no âmbito do Modelo faeng
 %% ------------------------------------------------------------------------
@@ -118,7 +132,7 @@
 %% ------------------------------------------------------------------------
 %% Dedicatória
 %% ------------------------------------------------------------------------
-\imprimirdedicatoria{Dedicação desse trabalho ao Primeiro Operário eleito Presidente da República, e pela terceira vez Presidente do Brasil, Luiz Inácio Lula da Silva}
+\imprimirdedicatoria{Dedicação desse trabalho ao Presidente da República Luiz Inácio Lula da Silva}
 %% ------------------------------------------------------------------------
 %% Agradecimentos
 %% ------------------------------------------------------------------------
@@ -225,11 +239,11 @@ O modelo de máquina de Turing é uma abstração poderosa que permitiu aos cien
 
 \subsection{Linguagens de domínio específico}
 
-\subsection{Linguaguns de programação web}
+\subsection{Linguagurens de programação web}
 
 \section{Paradigmas de Programação}
 
-\subsection{Programação Imperativa}\
+\subsection{Programação Imperativa}
 
 \subsection{Programação Orientada a Objetos}
 
@@ -242,7 +256,104 @@ O modelo de máquina de Turing é uma abstração poderosa que permitiu aos cien
 \subsection{Programação Orientada a Eventos}
 
 %% Capítulo
-\include{abntex2-modelo-include-comandos}
+\chapter[Algoritmos clássicos de computação]{Algoritmos Clássicos}
+
+\section{Algoritmos Clássicos de ordenação}
+
+\subsection{Bubble Sort}
+O algoritmo Bubble Sort é o método de ordenação mais simples, basicamente faz a comparação entre as adjacências de \textit{array}, ou vetor, com as seguinte lógica, compara o elemento na posição "i" com o elemento da na posição "j", tal que $ i = j+1$.
+
+O Algoritmo em questão possui dois laços de repetição, o laço interno, que é sobre a variável $j$ faz iteração com a comparação dos elementos da posição $i$ com os demais elementos do \textit{array}, em seguida no laço mais externo quando o valor da variável $i$ incrementa, o processo do laço interno é novamente avaliado, com início na posição $j = i+1$ e limite na posição $j = n - 1$, sendo $n$ o comprimento do vetor
+
+Basicamente temos a seguinte estrutura do algoritmo:
+
+\begin{algorithm}
+\caption{Bubble Sort}
+\begin{algorithmic}
+\REQUIRE $(V,n)$
+\ENSURE $(V,n) \quad ||  \quad V[1] \leq V[2] \leq \ldots \leq V[n-1] \leq V[n]$
+\STATE $i \gets 0$
+\STATE $j \gets 0$
+\STATE $aux \gets 0$
+
+\FOR{$i \gets 0$ to $n$}
+    \FOR{$j \gets 0$ to $n-1$}  
+        \IF{$V[j] > V[j+1]$}
+            \STATE $aux \gets V[j]$
+            \STATE $V[j] \gets V[j+1]$
+            \STATE $V[j+1] \gets aux$
+        \ENDIF
+    \ENDFOR
+\ENDFOR 
+\end{algorithmic}
+\end{algorithm}
+
+Neste ponto temos os seguintes cenários para avaliação:
+\begin{enumerate}
+    \item Ordenação com números aleatórios no \textit{array}
+    \item Ordenação com números em ordem crescente no  \textit{array}
+    \item Ordenação com número em ordem decrescente no \textit{array}
+\end{enumerate}
+
+\subsection{Análise dos cenário em linguagem compilada,C++}
+
+Em C++, a implementação fica:
+
+\begin{lstlisting}
+#include<cstdlib>
+#include<ctime>
+#include <iostream>
+
+
+void bubble(int* v, int n) {
+	int i, j, aux;
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n - 1;j++) {
+			if (v[j] > v[j + 1]) {
+				aux = v[j];
+				v[j] = v[j + 1];
+				v[j + 1] = aux;
+			}
+		}
+	}
+}
+
+int main()
+{
+	int first_clock = clock();
+	int first_time = time(NULL);
+	srand(time(NULL));
+	
+	int n = 0;
+	std::cin >> n;
+
+	printf("%d \n", n);
+	int *v = new int[n];
+
+	for (int i = 0; i < n; i++) {
+		v[i] = 0 + rand() % n;
+	}
+
+
+	bubble(v, n);
+
+
+
+	delete [] v;
+
+	int second_clock = clock();
+	int second_time = time(NULL);
+
+	std::cout << "Tempo decorrido (clock): " << (second_clock - first_clock) / (double)CLOCKS_PER_SEC << " segundos" << std::endl;
+	std::cout << "Tempo decorrido (time): " << (second_time - first_time) << " segundos" << std::endl;
+
+	return 0;
+		 
+}
+\end{lstlisting}
+
+\subsubsection{Ordenação com números aleatórios no \textit{array}}
+
 %% ------------------------------------------------------------------------
 %% Conclusão
 \chapter[Conclusão]{Conclusão}
@@ -258,7 +369,7 @@ A conclusão também é um capítulo.
 %% ========================================================================
 %% Referências bibliográficas
 %% ------------------------------------------------------------------------
-\bibliography{abntex2-modelo-references}
+
 %% ========================================================================
 
 %% ========================================================================
@@ -273,13 +384,12 @@ A conclusão também é um capítulo.
 %% Inicia os apêndices
 %% ------------------------------------------------------------------------
 \begin{apendicesenv}
-\partapendices %% Imprime uma página indicando o início dos apêndices
-\chapter{Quisque libero justo} %% Divisão em capítulos, como no restante
+%% Imprime uma página indicando o início dos apêndices
 
 
 
-sdfkns,d
-\lipsum[1-5]
+
+
 \end{apendicesenv}
 %% ========================================================================
 
@@ -289,11 +399,6 @@ sdfkns,d
 %% Inicia os anexos
 %% ------------------------------------------------------------------------
 \begin{anexosenv}
-\partanexos  %% Imprime uma página indicando o início dos anexos
-\chapter{Morbi ultrices rutrum lorem.} %% Divisão em capítulos.
-\lipsum[1-25]
-\section{Test} %% Divisão em sessões.
-\lipsum[1-20]
 \end{anexosenv}
 %% ========================================================================
 
