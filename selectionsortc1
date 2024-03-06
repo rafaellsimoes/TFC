@@ -1,0 +1,53 @@
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+
+void selection(int* v, int n, long long& comp, long long& mov) {
+    int x, i, j, min;
+    for (i = 0; i < n - 1; i++) {
+        min = i;
+        for (j = i + 1; j < n; j++) {
+            comp++;
+            if (v[j] < v[min]) {
+                min = j;
+            }
+        }
+        if (i != min) {
+            x = v[min];
+            v[min] = v[i];
+            v[i] = x;
+            mov++;
+        }
+    }
+}
+
+
+int main()
+{   
+    long long comp = 0;
+    long long mov = 0;
+    int first_clock = clock();
+    int first_time = time(NULL);
+    srand(static_cast<unsigned>(time(NULL)));
+
+    int n = 25000;
+    int* v = new int[n];
+    
+    for (int i = 0; i < n; i++) {
+        v[i] = 0 + rand() % n;
+    }
+
+    
+   
+    selection(v, n, comp,mov);
+
+    
+    int second_clock = clock();
+    int second_time = time(NULL);
+    std::cout << "Tamanho " << n<<std::endl;
+    std::cout << "Tempo decorrido (clock): " << (second_clock - first_clock) / (double)CLOCKS_PER_SEC << " segundos" << std::endl;
+    std::cout << "Tempo decorrido (time): " << (second_time - first_time) << " segundos" << std::endl;
+    std::cout << "Comparisons: " << comp << std::endl;
+    std::cout << "Swaps: " << mov << std::endl;
+    delete[]v;
+}
