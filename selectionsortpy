@@ -1,0 +1,50 @@
+import random as rd
+import numpy as np
+import time
+start_time = time.time()
+def selection(v,comp,mov):
+    mov = 0
+    comp = 0
+    n = len(vet)
+    
+    for i in range(n-1):
+        min = i
+        
+        for j in range(i+1, n):
+            comp += 1
+            if v[j] < v[min]:
+                min = j
+            
+        if i != min:
+            x = v[min]
+            v[min] = v[i]
+            v[i] = x
+            mov += 1
+    
+    return comp, mov
+
+
+n = 100
+vet = list(range(n))
+
+for i in range(len(vet)):
+    vet[i] = int(rd.uniform(0,len(vet)))
+comp = 0
+mov = 0
+selection(vet,comp,mov)
+comp,mov = selection(vet,comp,vet)
+end_time = time.time()
+
+elapsed_time = end_time - start_time
+
+print('Tempo total')
+print(round(elapsed_time, 4))
+
+print('Tempo em segundos')
+print(round(elapsed_time, 2))
+
+print('Comparacoes')
+print(comp)
+
+print('Trocas')
+print(mov)
