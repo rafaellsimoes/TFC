@@ -1,0 +1,56 @@
+using Microsoft.VisualBasic.FileIO;
+using System;
+using System.Globalization;
+
+namespace selection
+{
+    class Program
+    {
+        static void selection(int[] v, ref long comp, ref long mov)
+        {
+            int i, j, x, min;
+            for(i = 0; i < v.Length; i++)
+            {
+                min = i;
+                for(j=i+1; j < v.Length; j++)
+                {
+                    comp++;
+                    if (v[j] < v[min])
+                    {
+                        min = j;
+                    }
+                }
+                if (i != min)
+                {
+                    x = v[min];
+                    v[min] = v[i];
+                    v[i] = x;
+                    mov++;
+                }
+            }
+        }
+        static void Main(string[] args)
+        {
+            DateTime first_time = DateTime.Now;
+            int n = 180000;
+            Random rnd = new Random();
+            int[] arr  = new int[n];
+            for(int i = 0; i < arr.Length; i++) {
+                arr[i] = rnd.Next(-n,n);
+            }
+            long comp = 0, mov = 0;
+            selection(arr,ref comp, ref mov);
+            Console.WriteLine("Antes / Depois");
+            DateTime last_time = DateTime.Now;  
+            TimeSpan total_time = last_time - first_time;
+            Console.WriteLine("Tamanho");
+            Console.WriteLine(n);
+            Console.WriteLine(total_time.TotalSeconds.ToString("F4"));
+            Console.WriteLine(Math.Round(total_time.TotalSeconds));
+            Console.WriteLine("Comparações");
+            Console.WriteLine(comp);
+            Console.WriteLine("Movimentações");
+            Console.WriteLine(mov);          
+        }
+    }
+}
