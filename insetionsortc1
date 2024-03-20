@@ -9,13 +9,12 @@ void insertion(int* v, int n,long long int& comp, long long int& trc) {
     for (i = 1; i < n; i++) {
         x = v[i];
         j = i - 1;
-        comp = 0;
+        comp++;
         while (x < v[j]) {
             v[j + 1] = v[j];
             j--;
             comp++;
             trc++;
-
 
         }
         v[j + 1] = x;
@@ -29,6 +28,7 @@ int main()
     int first_time = time(NULL);
     long long int trc = 0, comp = 0;
     srand(time(NULL));
+
     int n = 180000;
 
     int* v = new int[n];
