@@ -1,0 +1,43 @@
+import random as rd
+import numpy as np 
+import matplotlib.pyplot as plt
+import time
+import math
+
+start_time = time.time()
+
+def bubble(v,n):
+    i = 0
+    j = 0
+    aux = 0
+    for i in range(n):
+        for j in range(n-1):
+            if(v[j]>v[j+1]):
+                aux = v[j]
+                v[j] =v[j+1]
+                v[j+1] = aux 
+        
+
+n = 70000
+
+vet = list(range(n))
+
+for i in range(n):
+    vet[i] = int(rd.uniform(-len(vet),len(vet)))
+    
+#print(vet)
+
+bubble(vet,n)
+
+#print(vet)
+
+end_time = time.time()
+
+elapsed_time = end_time - start_time
+
+print('Tempo total')
+elapsed_time_4 = round(elapsed_time,4)
+print(elapsed_time_4)
+
+print('tempo em segundos')
+print(round(elapsed_time,2)) 
